@@ -75,6 +75,13 @@ To get started with this setup, follow these steps:
     home-manager switch .
     ```
 
+8. **Updates**
+```bash
+cd nixos-config-reborn
+sudo nixos-rebuild switch --flake .#<hostname>
+home-manager switch . 
+```
+
 ## 😎 Enjoy!
 
 ![screenshot](./screenshots/screenshot2.png)
