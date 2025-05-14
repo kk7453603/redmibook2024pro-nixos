@@ -4,7 +4,6 @@ Welcome to my redesigned NixOS configuration built for efficiency and aesthetics
 
 ![screenshot](./screenshots/screenshot1.png)
 
-You can still find my old configuration [here](https://github.com/Andrey0189/nixos-config)
 
 ## ✨ Features
 
@@ -71,9 +70,9 @@ To get started with this setup, follow these steps:
     ```bash
     cd nixos-config-reborn
     git add .
-    nixos-rebuild switch --flake ./#<hostname>
-    # or nixos-install --flake ./#<hostname> if you are installing on a fresh system
-    home-manager switch
+    sudo nixos-rebuild switch --flake .#<hostname>
+    # or nixos-install --flake .#<hostname> if you are installing on a fresh system
+    home-manager switch .
     ```
 
 ## 😎 Enjoy!
@@ -83,4 +82,6 @@ To get started with this setup, follow these steps:
 ## 🤝 Contributions
 
 Feel free to fork the repository and submit pull requests if you'd like to contribute improvements. Open issues if you encounter any problems with the config or have ideas for new features.
+
+## ! Its fork from original creator for redmibook 2024 pro ![original](https://github.com/Andrey0189/nixos-config-reborn)
 
