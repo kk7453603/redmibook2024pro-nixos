@@ -7,15 +7,14 @@
     # Desktop apps
     anki
     code-cursor
+    vscode
     imv
     mpv
     obs-studio
     obsidian
     pavucontrol
-    teams-for-linux
     telegram-desktop
     vesktop
-
     # CLI utils
     bc
     bottom
@@ -49,7 +48,7 @@
     openjdk23
     nodejs
     python311
-
+    go
     # WM stuff
     libsForQt5.xwaylandvideobridge
     libnotify

@@ -13,7 +13,7 @@
         "XDG_SCREENSHOTS_DIR,$HOME/screens"
       ];
 
-      monitor = ",highres@120,auto,1";
+      monitor = ",3072x1920@120,auto,1.7";
       "$mainMod" = "SUPER";
       "$terminal" = "alacritty";
       "$fileManager" = "$terminal -e sh -c 'ranger'";
@@ -61,7 +61,7 @@
 
       input = {
         kb_layout = "us,ru";
-        kb_options = "grp:lt_shift_toggle";
+        kb_options = "grp:alt_shift_toggle";
       };
 
       gestures = {

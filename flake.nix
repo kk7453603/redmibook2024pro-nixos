@@ -3,7 +3,7 @@
 
   inputs = {
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -31,7 +31,7 @@
     hosts = [
       { hostname = "nixos"; stateVersion = "25.05"; }
     ];
-
+    
     
     makeSystem = { hostname, stateVersion }: nixpkgs.lib.nixosSystem {
       system = system;
@@ -46,13 +46,14 @@
     };
 
   in {
+    nixpkgs.config.allowUnfree = true; 
     nixosConfigurations = nixpkgs.lib.foldl' (configs: host:
       configs // {
         "${host.hostname}" = makeSystem {
           inherit (host) hostname stateVersion;
         };
       }) {} hosts;
-
+    
     homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${system};
       extraSpecialArgs = {
