@@ -14,6 +14,33 @@ Welcome to my redesigned NixOS configuration built for efficiency and aesthetics
 - 🧇 **Tmux**: with my own hotkeys.
 - 🌟 **Zsh + starship**: Efficient shell setup with lots of aliases.
 
+### Hyprland Keybindings
+
+Some of the most useful keybindings (Mod is SUPER key):
+
+| Keybinding          | Action                                         |
+|---------------------|------------------------------------------------|
+| `Mod + SHIFT + Enter` | Open Terminal (alacritty)                      |
+| `Mod + SHIFT + C`   | Close Active Window                            |
+| `Mod + SHIFT + Q`   | Exit Hyprland                                  |
+| `Mod + R`           | Open File Manager (ranger)                     |
+| `Mod + D`           | Application Menu (wofi --show drun)            |
+| `Mod + E`           | Emoji Selector (bemoji)                        |
+| `Mod + V`           | Clipboard History (cliphist via wofi)          |
+| `Mod + L`           | Lock Session                                   |
+| `Mod + P`           | Show Keybindings Cheatsheet (wofi)             |
+| `Mod + SHIFT + P`   | Color Picker (hyprpicker)                      |
+| `PrintScreen`       | Screenshot Area (grimblast)                    |
+| `Mod + Arrows`      | Move Focus                                     |
+| `Mod + SHIFT + Arrows`| Swap Window                                    |
+| `Mod + CTRL + Arrows` | Resize Window                                  |
+| `Mod + [1-9,0]`     | Switch Workspace                               |
+| `Mod + SHIFT + [1-9,0]`| Move Window to Workspace                     |
+| `Mod + S`           | Toggle Special Workspace (scratchpad)          |
+| `Mod + SHIFT + S`   | Move Active Window to Special Workspace        |
+
+For a full list, press `Mod + P` to see the cheatsheet.
+
 ## 🚀 Installation
 
 To get started with this setup, follow these steps:
@@ -78,6 +105,8 @@ To get started with this setup, follow these steps:
 8. **Updates**
 ```bash
 cd nixos-config-reborn
+git fetch # Рекомендуется для получения последних изменений из удаленного репозитория перед обновлением
+git pull # Если вы хотите слить изменения
 sudo nixos-rebuild switch --flake .#<hostname>
 home-manager switch . 
 ```

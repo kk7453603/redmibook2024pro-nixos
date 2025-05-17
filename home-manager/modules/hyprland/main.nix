@@ -13,7 +13,7 @@
         "XDG_SCREENSHOTS_DIR,$HOME/screens"
       ];
 
-      monitor = ",3072x1920@120,auto,1.7";
+      monitor = ",3072x1920@120,auto,1.75";
       "$mainMod" = "SUPER";
       "$terminal" = "alacritty";
       "$fileManager" = "$terminal -e sh -c 'ranger'";
@@ -62,6 +62,15 @@
       input = {
         kb_layout = "us,ru";
         kb_options = "grp:alt_shift_toggle";
+        sensitivity = 0.3;
+        touchpad = {
+          natural_scroll = true;
+          tap-to-click = true;
+          disable_while_typing = true;
+          clickfinger_behavior = true; # Позволяет использовать правую кнопку мыши касанием двумя пальцами
+          middle_button_emulation = true; # Эмуляция средней кнопки мыши (например, касанием тремя пальцами)
+          scroll_factor = 0.5; # Коэффициент скорости прокрутки, подберите удобное значение
+        };
       };
 
       gestures = {

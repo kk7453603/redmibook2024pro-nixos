@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   booksDir = "$HOME/Downloads/books";
   booksScript = pkgs.writeScriptBin "open_books" ''
@@ -14,8 +14,45 @@ let
         echo "No book selected."
     fi
   '';
+
+  # Содержимое шпаргалки
+  hyprlandCheatsheetContent = ''
+    Hyprland Keybindings (${config.wayland.windowManager.hyprland.settings."$mainMod"}):
+
+    Mod + SHIFT + Return  - Open Terminal
+    Mod + SHIFT + C       - Close Active Window
+    Mod + SHIFT + Q       - Exit Hyprland
+    Mod + R               - Open File Manager
+    Mod + F               - Toggle Floating
+    Mod + D               - Application Menu (wofi)
+    Mod + E               - Emoji Selector
+    Mod + V               - Clipboard History
+    Mod + L               - Lock Session
+    Mod + SHIFT + P       - Color Picker
+    Mod + P               - Show This Cheatsheet
+    Print                 - Screenshot Area
+
+    --- Focus & Window Movement ---
+    Mod + Arrows          - Move Focus
+    Mod + SHIFT + Arrows  - Swap Window
+    Mod + CTRL + Arrows   - Resize Window
+
+    --- Workspaces ---
+    Mod + [1-9,0]         - Switch Workspace
+    Mod + SHIFT + [1-9,0] - Move Window to Workspace
+
+    --- Special Workspace ---
+    Mod + S               - Toggle Special Workspace
+    Mod + SHIFT + S       - Move to Special Workspace
+  '';
 in {
   home.packages = [ booksScript ];
+
+  # Декларативное создание файла шпаргалки
+  home.file.".config/hypr/hyprland_cheatsheet.txt" = {
+    text = hyprlandCheatsheetContent;
+    executable = false; # Файл не должен быть исполняемым
+  };
 
   wayland.windowManager.hyprland.settings = {
     bind = [
@@ -32,7 +69,8 @@ in {
       "$mainMod,       B, exec, pkill -SIGUSR2 waybar"
       "$mainMod SHIFT, B, exec, pkill -SIGUSR1 waybar"
       "$mainMod,       L, exec, loginctl lock-session"
-      "$mainMod,       P, exec, hyprpicker -an"
+      "$mainMod SHIFT, P, exec, hyprpicker -an"
+      "$mainMod,       P, exec, sh -c 'cat $HOME/.config/hypr/hyprland_cheatsheet.txt | wofi --dmenu --prompt \"Keybindings\" --width 1000 --height 600'"
       "$mainMod,       N, exec, swaync-client -t"
       ", Print, exec, grimblast --notify --freeze copysave area"
       "$mainMod,       W, exec, ${booksScript}/bin/open_books"
