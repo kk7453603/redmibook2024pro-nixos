@@ -13,7 +13,7 @@
         "XDG_SCREENSHOTS_DIR,$HOME/screens"
       ];
 
-      monitor = ",3072x1920@120,auto,1.75";
+      monitor = ",3072x1920@120,auto,2.0";
       "$mainMod" = "SUPER";
       "$terminal" = "alacritty";
       "$fileManager" = "$terminal -e sh -c 'ranger'";
@@ -125,5 +125,10 @@
         "f[1], gapsout:0, gapsin:0"
       ];
     };
+  };
+
+  # Добавляем конфигурацию для systemd-сервиса пользователя hyprland
+  systemd.user.services.hyprland = {
+    serviceConfig.NoNewPrivileges = false; # Устанавливаем в false, чтобы разрешить новые привилегии
   };
 }

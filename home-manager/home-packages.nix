@@ -58,5 +58,6 @@
     # Other
     bemoji
     nix-prefetch-scripts
+    lazydocker
   ];
 }

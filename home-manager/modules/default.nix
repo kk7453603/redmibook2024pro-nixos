@@ -18,5 +18,6 @@
     ./wofi
     ./zathura.nix
     ./zsh.nix
+    ./hm-cleanup.nix
   ];
 }

@@ -16,5 +16,6 @@
     ./zram.nix
     ./makoDiscord.nix
     ./power.nix
+    ./docker.nix
   ];
 }
