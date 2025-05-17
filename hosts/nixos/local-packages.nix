@@ -7,8 +7,9 @@
      git
      curl
      #discord
+     tlp
      cacert
-    # jetbrains.pycharm-professional
+     #jetbrains.pycharm-professional
     # jre8
     # qemu
     # quickemu

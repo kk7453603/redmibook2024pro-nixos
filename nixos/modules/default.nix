@@ -15,5 +15,6 @@
     ./user.nix
     ./zram.nix
     ./makoDiscord.nix
+    ./power.nix
   ];
 }

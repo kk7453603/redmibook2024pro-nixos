@@ -41,6 +41,14 @@ Some of the most useful keybindings (Mod is SUPER key):
 
 For a full list, press `Mod + P` to see the cheatsheet.
 
+### Power Management (TLP)
+
+- Click the **battery icon** in Waybar to toggle between TLP power modes:
+    - **AC Mode**: Performance-oriented settings, active when on AC power or manually selected.
+    - **Battery Mode**: Power-saving settings, active when on battery power or manually selected.
+- TLP settings (governors, charge thresholds, etc.) are configured in `nixos/modules/power.nix`.
+- `thermald` is also enabled for system thermal management.
+
 ## 🚀 Installation
 
 To get started with this setup, follow these steps:
