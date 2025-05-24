@@ -12,5 +12,5 @@
   };
 
   # Опционально: автоматически оптимизировать хранилище Nix после сборки
-  nix.autoOptimiseStore = true;
+  nix.settings.auto-optimise-store = true;
 }

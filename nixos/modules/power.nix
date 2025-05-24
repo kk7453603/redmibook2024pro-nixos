@@ -70,4 +70,5 @@
   # Убедимся, что пакет tlp доступен для использования в sudo.
   # Это также должно быть сделано автоматически при services.tlp.enable = true.
   # environment.systemPackages = [ pkgs.tlp ]; # Обычно не требуется, если сервис включен.
+  environment.systemPackages = [ pkgs.upower ];
 } 
