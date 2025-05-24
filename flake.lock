@@ -224,17 +224,17 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1681450004,
-        "narHash": "sha256-Kugldx+5vf6rc0GvzED18MCEJewwqij3tzKkgej5uTo=",
-        "owner": "hiddify",
-        "repo": "Clash.Meta",
-        "rev": "bf3c6a044c38a83c8f54aa322a4b3770ef00acf3",
+        "lastModified": 1747834640,
+        "narHash": "sha256-T1tg4sAR7OY3N6OheUySyQ0HLXYUBTLjeWx3qxHsb30=",
+        "owner": "MetaCubeX",
+        "repo": "mihomo",
+        "rev": "fd959feff28581d212b2dc7588be986f50834e28",
         "type": "github"
       },
       "original": {
-        "owner": "hiddify",
-        "ref": "Meta",
-        "repo": "Clash.Meta",
+        "owner": "MetaCubeX",
+        "ref": "v1.19.9",
+        "repo": "mihomo",
         "type": "github"
       }
     },

@@ -19,7 +19,7 @@
     flake-utils.url = "github:numtide/flake-utils";
 
     hiddify-clash-meta = {
-      url = "github:hiddify/Clash.Meta/Meta"; # Используем ветку Meta, как указано в одном из результатов поиска
+      url = "github:MetaCubeX/mihomo/v1.19.9";
       flake = true; # Указываем, что это flake
     };
     # COMING SOON...
