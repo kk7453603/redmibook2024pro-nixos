@@ -1,4 +1,46 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  hiddify-launcher = pkgs.writeShellScriptBin "hiddify-launcher" ''
+    #!${pkgs.runtimeShell}
+    set -x # Включаем вывод отладочной информации
+
+    # Захватываем переменные из пользовательского окружения
+    USER_DISPLAY="''${DISPLAY}"
+    USER_WAYLAND_DISPLAY="''${WAYLAND_DISPLAY}"
+    USER_XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR}"
+    # USER_XAUTHORITY="''${XAUTHORITY}" # XAUTHORITY часто пуст или не нужен в Wayland
+
+    echo "Захваченные переменные:" >&2
+    echo "  DISPLAY (пользовательский): $USER_DISPLAY" >&2
+    echo "  WAYLAND_DISPLAY (пользовательский): $USER_WAYLAND_DISPLAY" >&2
+    echo "  XDG_RUNTIME_DIR (пользовательский): $USER_XDG_RUNTIME_DIR" >&2
+    # echo "  XAUTHORITY (пользовательский): $USER_XAUTHORITY" >&2
+
+    if [ -z "$USER_WAYLAND_DISPLAY" ] && [ -z "$USER_DISPLAY" ]; then
+      echo "Критическая ошибка: Ни WAYLAND_DISPLAY, ни DISPLAY не установлены в окружении пользователя." >&2
+      exit 1
+    fi
+
+    HIDDIFY_CMD="/run/current-system/sw/bin/hiddify"
+
+    echo "Попытка запуска $HIDDIFY_CMD от имени root с использованием pkexec." >&2
+    echo "Передаваемые переменные в pkexec env:" >&2
+    echo "  WAYLAND_DISPLAY=$USER_WAYLAND_DISPLAY" >&2
+    echo "  XDG_RUNTIME_DIR=$USER_XDG_RUNTIME_DIR" >&2
+
+    # Запускаем, передавая только Wayland-специфичные переменные
+    # pkexec по умолчанию сильно чистит окружение.
+    pkexec env \
+      WAYLAND_DISPLAY="$USER_WAYLAND_DISPLAY" \
+      XDG_RUNTIME_DIR="$USER_XDG_RUNTIME_DIR" \
+      "$HIDDIFY_CMD"
+    
+    exit_code=$?
+    echo "pkexec завершился с кодом выхода: $exit_code" >&2
+    exit $exit_code
+  '';
+in
+{
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
@@ -54,56 +96,27 @@
     libnotify
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
+    xorg.xhost
 
     # Other
     bemoji
     nix-prefetch-scripts
     lazydocker
     nix-prefetch-github
-    # Hiddify GUI (AppImage)
-    (let
-      # ЗАМЕНИ ЭТИ ЗНАЧЕНИЯ!
-      # Перейди на https://github.com/hiddify/hiddify-app/releases
-      # Скопируй URL для Hiddify-Linux-x64.AppImage и его SHA256 хэш
-      appimageUrl = "https://github.com/hiddify/hiddify-next/releases/download/v2.5.7/Hiddify-Linux-x64.AppImage"; # Например: "https://github.com/hiddify/hiddify-app/releases/download/vX.Y.Z/Hiddify-Linux-x64.AppImage"
-      appimageSha256 = "1j5ljy0mgxv70pjkhf6cif5hvq0bm2d2vhal75l1pbdfxklrj6p5"; # Например: "0abcdef1234567890abcdef1234567890abcdef1234567890abcdef123456789"
-      appName = "hiddify-gui";
-    in pkgs.stdenv.mkDerivation {
-      name = appName;
-      src = pkgs.fetchurl {
-        url = appimageUrl;
-        sha256 = appimageSha256;
-      };
-      dontUnpack = true;
-      installPhase = ''
-        mkdir -p $out/bin
-        cp $src $out/bin/${appName}
-        chmod +x $out/bin/${appName}
+    
+    hiddify-launcher # Добавляем наш скрипт-обертку
 
-        # Создаем .desktop файл для меню приложений
-        mkdir -p $out/share/applications
-        cat > $out/share/applications/${appName}.desktop << EOF
-        [Desktop Entry]
-        Name=Hiddify
-        Comment=Hiddify Proxy Client
-        Exec=$out/bin/${appName} %U
-        Terminal=false
-        Type=Application
-        Icon=${ # Попытка найти иконку, если она есть в AppImage, или указать стандартную
-                  # Это более сложная часть, для начала можно оставить или использовать стандартную иконку
-                  # Например, pkgs.hicolor_icon_theme или если у hiddify есть отдельный пакет с иконками
-                  # Для простоты пока можно оставить пустым или указать системную.
-                  # Если AppImage содержит иконку, ее можно было бы извлечь, но это усложняет derivation.
-                  # Для начала попробуем так, возможно, AppImage сам зарегистрирует иконку.
-                  # Или можно будет позже добавить `pkgs.makeWrapper` и указать `xdg-icon-resource`
-                  ""
-                }
-        Categories=Network;Proxy;
-        EOF
-      '';
-      # Обертка для запуска AppImage
-      # Вместо прямого запуска, лучше использовать appimage-run, если AppImage не содержит все зависимости
-      # Но для начала попробуем так, если не заработает, добавим appimage-run
+    # Hiddify GUI
+     # Используем готовый пакет
+    (pkgs.makeDesktopItem {
+      name = "hiddify-app";
+      desktopName = "Hiddify-root";
+      comment = "Hiddify Client";
+      exec = "hiddify-launcher"; # Используем просто имя команды, т.к. скрипт будет в PATH
+      icon = "hiddify"; # Имя иконки, должно быть установлено пакетом hiddify-app
+      terminal = false;
+      type = "Application";
+      categories = [ "Network" ];
     })
   ];
 }

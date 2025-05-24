@@ -18,10 +18,10 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     flake-utils.url = "github:numtide/flake-utils";
 
-    hiddify-clash-meta = {
-      url = "github:MetaCubeX/mihomo/v1.19.9";
-      flake = true; # Указываем, что это flake
-    };
+    #hiddify-clash-meta = {
+    #  url = "github:MetaCubeX/mihomo/v1.19.9";
+    #  flake = true; # Указываем, что это flake
+    #};
     # COMING SOON...
     #nixvim = {
     #  url = "github:nix-community/nixvim";

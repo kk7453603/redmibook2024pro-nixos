@@ -9,6 +9,7 @@
      #discord
      tlp
      cacert
+     hiddify-app
      #jetbrains.pycharm-professional
     # jre8
     # qemu
